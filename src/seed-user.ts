@@ -13,8 +13,23 @@ if (!email) {
   process.exit(2);
 }
 
+let config;
+try {
+  config = readBuiltinAuthConfig();
+} catch (e) {
+  console.error(`${(e as Error).message}\n`);
+  console.error('This script must run where the server runs, so it writes to the same');
+  console.error('database: open the Dokploy container terminal, or');
+  console.error('  docker exec -it <skylight container> node dist/seed-user.js <email> [name]');
+  process.exit(2);
+}
+
 async function readPassword(): Promise<string> {
   if (process.env.SEED_PASSWORD) return process.env.SEED_PASSWORD;
+  if (!process.stdin.isTTY) {
+    console.error('no terminal to prompt on: set SEED_PASSWORD or run interactively');
+    process.exit(2);
+  }
   const muted = new Writable({ write: (_chunk, _enc, cb) => cb() });
   const rl = createInterface({ input: process.stdin, output: muted, terminal: true });
   process.stderr.write('Password: ');
@@ -30,7 +45,7 @@ if (password.length < 8) {
   process.exit(2);
 }
 
-const options = authOptions(readBuiltinAuthConfig(), { allowSignUp: true });
+const options = authOptions(config, { allowSignUp: true });
 await migrateAuthDb(options);
 const auth = createAuth(options);
 const result = await auth.api.signUpEmail({
