@@ -417,3 +417,7 @@ An irresponsible amount.
 In a heartbeat.
 
 *I have officially LLM-pilled my family. The fridge never stood a chance.*
+
+## License
+
+MIT. Take it, point it at your own fridge.
