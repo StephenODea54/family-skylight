@@ -1,0 +1,32 @@
+{
+  "name": "family-skylight",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@better-auth/cimd": "^1.7.14",
+    "@better-auth/mcp": "^1.7.14",
+    "@hono/node-server": "^2.1.5",
+    "@modelcontextprotocol/client": "^2.4.0",
+    "@modelcontextprotocol/hono": "^2.0.2",
+    "@modelcontextprotocol/server": "^2.4.0",
+    "better-auth": "^1.7.14",
+    "hono": "^4.13.14",
+    "jose": "^6.2.14",
+    "skylight-mcp": "1.4.6",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}

@@ -1,0 +1,31 @@
+services:
+  skylight:
+    build: .
+    restart: unless-stopped
+    init: true
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      PUBLIC_URL: ${PUBLIC_URL}
+      # Built-in OAuth server (Better Auth, SQLite on the data volume).
+      AUTH_PROVIDER: ${AUTH_PROVIDER:-builtin}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      ALLOW_DCR: ${ALLOW_DCR:-false}
+      ALLOWED_SUBJECTS: ${ALLOWED_SUBJECTS}
+      # Only read when AUTH_PROVIDER=external.
+      OAUTH_ISSUER: ${OAUTH_ISSUER:-}
+      OAUTH_JWKS_URL: ${OAUTH_JWKS_URL:-}
+      OAUTH_AUDIENCE: ${OAUTH_AUDIENCE:-}
+      SKYLIGHT_EMAIL: ${SKYLIGHT_EMAIL}
+      SKYLIGHT_PASSWORD: ${SKYLIGHT_PASSWORD}
+      SKYLIGHT_FRAME_ID: ${SKYLIGHT_FRAME_ID:-}
+      MCP_DATA_DIR: /data
+      MCP_CONFIRM_MODE: ask-user
+      MCP_CONFIRM_ELICITATION: 'off'
+    expose:
+      - '3000'
+    volumes:
+      - skylight_tokens:/data
+
+volumes:
+  skylight_tokens:
